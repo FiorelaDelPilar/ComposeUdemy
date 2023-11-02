@@ -1,10 +1,12 @@
 package com.example.composeudemy
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -37,19 +39,26 @@ val recipeList = listOf(
 )
 
 @Composable
-private fun RecipeCard(recipe: Recipe){
+private fun RecipeCard(recipe: Recipe, onRecipeClick: (Recipe) -> Unit) {
     val image = painterResource(id = R.mipmap.header2)
-    Card(shape= RoundedCornerShape(8.dp), elevation = 8.dp, modifier = Modifier.padding(8.dp)){
-        Column(modifier = Modifier.padding(16.dp)) {
+    Card(shape = RoundedCornerShape(8.dp), elevation = 8.dp, modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier
+            .padding(16.dp)
+            .clickable { onRecipeClick(recipe) }) {
             val imageModifer = Modifier
                 .requiredHeight(120.dp)
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(8.dp))
-            Image(painter = image, modifier = imageModifer, contentScale = ContentScale.Crop, contentDescription = "Foto receta")
-            Spacer(modifier =  Modifier.padding(top = 10.dp))
+            Image(
+                painter = image,
+                modifier = imageModifer,
+                contentScale = ContentScale.Crop,
+                contentDescription = "Foto receta"
+            )
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             Text(text = recipe.title, style = MaterialTheme.typography.h6)
-            for(ingredient in recipe.ingredientes){
-                Text(text = "* $ingredient", style = MaterialTheme.typography.body2 )
+            for (ingredient in recipe.ingredientes) {
+                Text(text = "* $ingredient", style = MaterialTheme.typography.body2)
             }
         }
     }
@@ -66,13 +75,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun RecipeColumnList(recipeList: List<Recipe>){
-    LazyRow{
-        items(recipeList){recipe ->
-            RecipeCard(recipe = recipe)
+private fun RecipeColumnList(recipeList: List<Recipe>) {
+    LazyRow {
+        items(recipeList) { recipe ->
+            RecipeCard(recipe = recipe, onRecipeClick = {
+                Log.d("Recipe", "RecipeColumnList: ${it.title}")
+            })
         }
     }
 }
+
 @Composable
 private fun NewStory() {
     val image = painterResource(id = R.mipmap.header2)
@@ -102,6 +114,6 @@ private fun NewStory() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewNewStory() {
-    RecipeCard(recipe = recipeList[0])
+    RecipeCard(recipe = recipeList[0], onRecipeClick = {})
 }
 
