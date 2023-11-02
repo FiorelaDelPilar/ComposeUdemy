@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.composeudemy'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.composeudemy"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    //debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    //Fundamental building blocks of Compose's programming model an state management, and core runtime for the Compose COmpiler Plugin to target.
+    implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    //Fundamental components of compose UI needed to interact with the device, including layout, drawing, and input.
+    implementation "androidx.compose.ui:ui:$compose_version"
+    //Build Jetpack Compose UIs with ready to use Material Desing Components. This is higher level entry point of Compose, designed to provide components that ...
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    //Write Jetpack Compose applications with ready to use building blocks and extend foundation to build your own desing system pieces.
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.foundation:foundation-layout:$compose_version"
+    //Build animations in their Jetpack Compose applications to enrich the user experience.
+    implementation "androidx.compose.animation:animation:$compose_version"
+    //Allows to render composables with Preview
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    //In charge of setContent
+    implementation "androidx.activity:activity-compose:$activity_compose"
+    //Accompanist
+    implementation "dev.chrisbanes.accompanist:accompanist-coil:$accompanist"
+
+}
