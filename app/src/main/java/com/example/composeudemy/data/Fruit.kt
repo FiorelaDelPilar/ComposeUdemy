@@ -8,3 +8,5 @@ val fruitList = listOf(
     Fruit(2, "Banana"),
     Fruit(3, "Grape"),
 )
+
+fun findFruit(id: Int) = fruitList.find { it.id == id }
